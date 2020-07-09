@@ -1,0 +1,28 @@
+version: '3.2'
+
+services:
+  ghost:
+    build: .
+    restart: always
+    depends_on:
+      - mysql
+    ports:
+      - 2368:2368
+    environment:
+      database__client: mysql
+      database__connection__host: mysql
+      database__connection__user: root
+      database__connection__password: root
+      database__connection__database: ghost
+      storage__active: ghost-s3
+      storage__ghost-s3__accessKeyId:
+      storage__ghost-s3__secretAccessKey:
+      storage__ghost-s3__bucket:
+      storage__ghost-s3__region:
+      url: http://localhost:2368
+
+  mysql:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
